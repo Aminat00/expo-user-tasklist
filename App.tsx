@@ -1,20 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import React from "react";
+import { Navigation } from "navigation";
+import Constants from "expo-constants";
+import { ClerkProvider } from "@clerk/clerk-expo";
+import { tokenCache } from "./cache";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import * as SplashScreen from "expo-splash-screen";
+import { ActivityIndicator } from "react-native";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+function App() {
+	// React.useEffect(() => {
+	// 	SplashScreen.preventAutoHideAsync();
+	// }, []);
+	const publishableKey = Constants?.expoConfig?.extra?.clerkKey;
+
+	return (
+		<ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
+			<SafeAreaProvider>
+				<Navigation />
+			</SafeAreaProvider>
+		</ClerkProvider>
+	);
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;

@@ -1,0 +1,22 @@
+export const colors = {
+	transparent: "transparent",
+	current: "currentColor",
+	black: "#000000",
+	white: "#ffffff",
+	textBlue: "#0F172A",
+	violet: "#2B1A4E",
+	cool: "#151E3B",
+	darkRed: "#8A0606",
+	gray: "#7B7B88",
+	darkGray: "#4B5563",
+	lightRed: "#FCA5A5",
+	red: "#AE1111",
+	yellow: "#D7A200",
+	green: "#1CAD4D",
+	iconBlue: "#1C274C",
+	backgroundLight: "#EAEFFA",
+	defaultBg: "#F9FAFB",
+	lightGray: "#EBF1FD",
+	darkSoul: "#0F1F51",
+};
+export type Color = keyof typeof colors;
