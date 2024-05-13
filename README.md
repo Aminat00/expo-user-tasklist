@@ -33,7 +33,7 @@ Before running this application, make sure you have the following installed:
 
    To start the application, run the following command:
    
-       ```bash
+       
          pnpm start
      
 
