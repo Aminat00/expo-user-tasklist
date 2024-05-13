@@ -15,24 +15,26 @@ Before running this application, make sure you have the following installed:
 
    ```bash
    git clone <repository-url>
-Navigate to the project directory:
 
-cd user-task-lists
+
 Install dependencies using pnpm:
 
 2. Navigate to the project directory:
 
+ ```bash
 `cd user-task-lists`
 
 3. Install dependencies using pnpm:
 
+ ```bash
 pnpm install
 
 ## Usage
 
 To start the application, run the following command:
 
-`pnpm start`
+ ```bash
+pnpm start
 
 
 
