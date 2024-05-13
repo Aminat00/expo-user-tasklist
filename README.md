@@ -29,13 +29,13 @@ Before running this application, make sure you have the following installed:
     pnpm install
 
 
-
 ## Usage
 
 To start the application, run the following command:
 
-      ```bash
+    ```bash
       pnpm start
+     
 
 
 
