@@ -31,10 +31,10 @@ Before running this application, make sure you have the following installed:
 
 ## Usage
 
-To start the application, run the following command:
-
-    ```bash
-      pnpm start
+   To start the application, run the following command:
+   
+       ```bash
+         pnpm start
      
 
 
