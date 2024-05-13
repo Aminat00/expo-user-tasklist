@@ -17,17 +17,18 @@ Before running this application, make sure you have the following installed:
    git clone <repository-url>
 
 
-Install dependencies using pnpm:
-
 2. Navigate to the project directory:
 
  ```bash
-`cd user-task-lists`
+cd user-task-lists
+
 
 3. Install dependencies using pnpm:
 
  ```bash
 pnpm install
+
+
 
 ## Usage
 
