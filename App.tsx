@@ -9,9 +9,6 @@ import * as SplashScreen from "expo-splash-screen";
 import { ActivityIndicator } from "react-native";
 
 function App() {
-	// React.useEffect(() => {
-	// 	SplashScreen.preventAutoHideAsync();
-	// }, []);
 	const publishableKey = Constants?.expoConfig?.extra?.clerkKey;
 
 	return (

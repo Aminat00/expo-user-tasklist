@@ -1,6 +1,7 @@
 import { View, Text } from "react-native";
 import { IconProps } from "icons";
 import { colors } from "theme";
+import { fontsMap } from "assets";
 type TabBarItemProps = {
 	focused: boolean;
 	icon: React.FC<IconProps>;
@@ -25,7 +26,7 @@ export const TabBarItem: React.FC<TabBarItemProps> = ({
 			</View>
 			<Text
 				style={{
-					fontFamily: "Helvetica",
+					fontFamily: "HelveticaNow",
 					fontWeight: "700",
 					fontSize: 12,
 					lineHeight: 16,

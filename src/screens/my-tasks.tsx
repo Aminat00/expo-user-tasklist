@@ -1,41 +1,91 @@
 import {
 	ImageBackground,
 	Pressable,
-	SafeAreaView,
+	ScrollView,
 	StyleSheet,
 	Text,
 	View,
 } from "react-native";
 import React from "react";
-import { Header, ListView } from "components";
+import {
+	CalendarView,
+	Card,
+	CurrentWeek,
+	Header,
+	ListView,
+	allTasks,
+} from "components";
 import { StatusBar } from "expo-status-bar";
-import { headerBg } from "assets";
 import { colors } from "theme";
+import { getCurrentWeekText } from "utils";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+const headerBgURl = "https://i.ibb.co/RvDnD7b/header-bg-image.png";
 
 export const MyTasksScreen = () => {
+	const [isCalendarView, setCalendarView] = React.useState(false);
+
+	const toggleView = () => {
+		setCalendarView(!isCalendarView);
+	};
+
 	return (
-		<SafeAreaView style={{ flex: 1 }}>
-			<View style={styles.container}>
-				<View style={styles.header}>
-					<ImageBackground source={headerBg}>
+		<View style={styles.container}>
+			<ImageBackground source={{ uri: headerBgURl }}>
+				<SafeAreaView>
+					<View style={styles.header}>
 						<StatusBar style="dark" />
 						<Header />
-					</ImageBackground>
-					<View style={styles.tab}>
-						<Pressable style={styles.tabItem}>
-							<Text style={styles.tabTxt}>List View</Text>
-						</Pressable>
-						<Pressable
-							style={[styles.tabItem, { backgroundColor: colors.white }]}>
-							<Text style={[styles.tabTxt, { color: colors.darkSoul }]}>
-								Calendar View
-							</Text>
-						</Pressable>
+
+						<View style={styles.tab}>
+							<Pressable
+								style={[
+									styles.tabItem,
+									{
+										backgroundColor: isCalendarView
+											? colors.white
+											: colors.darkSoul,
+									},
+								]}
+								onPress={toggleView}>
+								<Text
+									style={[
+										styles.tabTxt,
+										{ color: isCalendarView ? colors.darkSoul : colors.white },
+									]}>
+									List View
+								</Text>
+							</Pressable>
+							<Pressable
+								style={[
+									styles.tabItem,
+									{
+										backgroundColor: isCalendarView
+											? colors.darkSoul
+											: colors.white,
+									},
+								]}
+								onPress={toggleView}>
+								<Text
+									style={[
+										styles.tabTxt,
+										{ color: isCalendarView ? colors.white : colors.darkSoul },
+									]}>
+									Calendar View
+								</Text>
+							</Pressable>
+						</View>
 					</View>
-				</View>
-				<ListView />
+				</SafeAreaView>
+			</ImageBackground>
+			<View style={styles.listViewContainer}>
+				<ScrollView
+					contentContainerStyle={{ gap: 16, paddingBottom: 60 }}
+					showsVerticalScrollIndicator={false}>
+					{isCalendarView ? <CalendarView /> : <ListView />}
+				</ScrollView>
 			</View>
-		</SafeAreaView>
+		</View>
 	);
 };
 
@@ -43,6 +93,7 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 	},
+
 	header: {
 		flexDirection: "column",
 		gap: 16,
@@ -59,7 +110,6 @@ const styles = StyleSheet.create({
 	},
 	tabItem: {
 		borderRadius: 8,
-		backgroundColor: colors.darkSoul,
 		paddingHorizontal: 12,
 		paddingVertical: 10,
 		width: "50%",
@@ -69,7 +119,12 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		lineHeight: 20,
 		fontWeight: "600",
-		color: colors.white,
 		textAlign: "center",
+	},
+
+	listViewContainer: {
+		flex: 1,
+		padding: 16,
+		backgroundColor: colors.lightGray,
 	},
 });

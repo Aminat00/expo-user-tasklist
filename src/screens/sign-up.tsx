@@ -1,10 +1,10 @@
 import * as React from "react";
 import {
+	KeyboardAvoidingView,
+	Platform,
 	Pressable,
-	SafeAreaView,
 	Text,
 	TextInput,
-	TouchableOpacity,
 	View,
 } from "react-native";
 import { useSignUp } from "@clerk/clerk-expo";
@@ -12,6 +12,7 @@ import { log } from "logger";
 import { OAuthButtons, styles } from "components";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "theme";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export const SignUpScreen = () => {
 	const { isLoaded, signUp } = useSignUp();
@@ -19,6 +20,7 @@ export const SignUpScreen = () => {
 	const [lastName, setLastName] = React.useState("");
 	const [emailAddress, setEmailAddress] = React.useState("");
 	const [password, setPassword] = React.useState("");
+	const [errorMessage, setErrorMessage] = React.useState("");
 	const { navigate } = useNavigation();
 
 	const onSignUpPress = async () => {
@@ -39,16 +41,20 @@ export const SignUpScreen = () => {
 
 			navigate("verifyCode");
 		} catch (err: any) {
+			const errorMessages = err?.errors?.map((error: any) => error.message);
+			setErrorMessage(errorMessages.join("\n"));
 			log("Error:> " + err?.status || "");
-			log("Error:> " + err?.errors ? JSON.stringify(err.errors) : err);
+			log("Error:> " + errorMessages);
 		}
 	};
 
 	const onSignInPress = () => navigate("signIn");
 
 	return (
-		<SafeAreaView style={{ flex: 1, backgroundColor: colors.defaultBg }}>
-			<View style={styles.container}>
+		<SafeAreaView style={{ flex: 1, padding: 10 }}>
+			<KeyboardAvoidingView
+				behavior={Platform.OS === "ios" ? "padding" : "height"}
+				style={styles.container}>
 				<View style={styles.inputView}>
 					<TextInput
 						value={firstName}
@@ -90,14 +96,26 @@ export const SignUpScreen = () => {
 						onChangeText={(password) => setPassword(password)}
 					/>
 				</View>
-
-				<View style={styles.oauthView}>
-					<OAuthButtons />
-				</View>
+				{errorMessage ? (
+					<Text
+						style={{
+							fontSize: 14,
+							lineHeight: 20,
+							fontWeight: "700",
+							color: colors.darkRed,
+							textAlign: "center",
+						}}>
+						{errorMessage}
+					</Text>
+				) : null}
 
 				<Pressable style={styles.primaryButton} onPress={onSignUpPress}>
 					<Text style={styles.primaryButtonText}>Sign up</Text>
 				</Pressable>
+
+				<View style={styles.oauthView}>
+					<OAuthButtons />
+				</View>
 
 				<View style={styles.footer}>
 					<Text>Have an account?</Text>
@@ -106,7 +124,7 @@ export const SignUpScreen = () => {
 						<Text style={styles.secondaryButtonText}>Sign in</Text>
 					</Pressable>
 				</View>
-			</View>
+			</KeyboardAvoidingView>
 		</SafeAreaView>
 	);
 };

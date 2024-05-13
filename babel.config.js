@@ -16,6 +16,7 @@ module.exports = function (api) {
 						theme: "./src/theme",
 						types: "./src/types.ts",
 						hooks: "./src/hooks.tsx",
+						utils: "./src/utils.ts",
 					},
 				},
 			],

@@ -1,5 +1,7 @@
 import React from "react";
 import {
+	KeyboardAvoidingView,
+	Platform,
 	Pressable,
 	Text,
 	TextInput,
@@ -10,6 +12,7 @@ import { useSignIn } from "@clerk/clerk-expo";
 import { log } from "logger";
 import { OAuthButtons, styles } from "components";
 import { useNavigation } from "@react-navigation/native";
+import { colors } from "theme";
 
 export const SignInScreen = () => {
 	const navigation = useNavigation();
@@ -17,6 +20,7 @@ export const SignInScreen = () => {
 
 	const [emailAddress, setEmailAddress] = React.useState("");
 	const [password, setPassword] = React.useState("");
+	const [errorMessage, setErrorMessage] = React.useState("");
 
 	const onSignInPress = async () => {
 		if (!isLoaded) {
@@ -31,15 +35,19 @@ export const SignInScreen = () => {
 
 			await setSession(completeSignIn.createdSessionId);
 		} catch (err: any) {
+			const errorMessages = err?.errors?.map((error: any) => error.message);
+			setErrorMessage(errorMessages.join("\n"));
 			log("Error:> " + err?.status || "");
-			log("Error:> " + err?.errors ? JSON.stringify(err.errors) : err);
+			log("Error:> " + errorMessages);
 		}
 	};
 
 	const onSignUpPress = () => navigation.navigate("signUp");
 
 	return (
-		<View style={styles.container}>
+		<KeyboardAvoidingView
+			behavior={Platform.OS === "ios" ? "padding" : "height"}
+			style={styles.container}>
 			<View style={styles.inputView}>
 				<TextInput
 					autoCapitalize="none"
@@ -62,6 +70,19 @@ export const SignInScreen = () => {
 				/>
 			</View>
 
+			{errorMessage ? (
+				<Text
+					style={{
+						fontSize: 14,
+						lineHeight: 20,
+						fontWeight: "700",
+						color: colors.darkRed,
+						textAlign: "center",
+					}}>
+					{errorMessage}
+				</Text>
+			) : null}
+
 			<Pressable style={styles.primaryButton} onPress={onSignInPress}>
 				<Text style={styles.primaryButtonText}>Sign in</Text>
 			</Pressable>
@@ -77,6 +98,6 @@ export const SignInScreen = () => {
 					<Text style={styles.secondaryButtonText}>Sign up</Text>
 				</Pressable>
 			</View>
-		</View>
+		</KeyboardAvoidingView>
 	);
 };

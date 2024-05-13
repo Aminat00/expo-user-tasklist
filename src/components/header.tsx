@@ -1,18 +1,23 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { RoundedImage } from "./rounded-image";
-import { profileImg } from "assets";
 import { colors } from "theme";
 import { Search } from "icons";
+import { allTasks } from "./data";
+
+const profileImgUrl = "https://i.ibb.co/Rbr4zgq/profile-img.png";
 
 export const Header: React.FC = () => {
 	return (
 		<View style={headerStyle.row}>
 			<View style={headerStyle.leftColumn}>
-				<RoundedImage source={profileImg} />
+				<RoundedImage source={{ uri: profileImgUrl }} />
 				<View style={headerStyle.textSection}>
-					<Text style={headerStyle.headingTxt}>My Tasks</Text>
-					<Text style={headerStyle.descriptionTxt}>120 Total Task</Text>
+					<Text style={headerStyle.headingTxt}>My Space</Text>
+					<Text
+						style={
+							headerStyle.descriptionTxt
+						}>{`${allTasks.length} Total Task`}</Text>
 				</View>
 			</View>
 			<View style={headerStyle.rightColumn}>

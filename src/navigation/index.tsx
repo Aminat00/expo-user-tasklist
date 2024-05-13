@@ -20,6 +20,8 @@ import { ClerkLoaded, useUser } from "@clerk/clerk-expo";
 import * as SplashScreen from "expo-splash-screen";
 import { colors } from "theme";
 import linking from "./linking-config";
+import { fontsMap } from "assets";
+import { useFonts } from "expo-font";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -100,8 +102,10 @@ const TabNavigator = () => {
 export const Navigation = () => {
 	const { isSignedIn, isLoaded } = useUser();
 
+	const [fontsLoaded] = useFonts(fontsMap);
+
 	React.useEffect(() => {
-		if (isLoaded) {
+		if (isLoaded || fontsLoaded) {
 			SplashScreen.hideAsync();
 		}
 	}, [isLoaded]);
