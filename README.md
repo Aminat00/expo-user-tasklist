@@ -1,4 +1,4 @@
-# User Task Lists App
+# User Task Management App
 
 This is a simple application for managing user task lists.
 
